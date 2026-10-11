@@ -72,4 +72,6 @@ public class PlaylistService
     }
 
     public List<Song> GetAllSongs() => _songs;
+
+    public Song? GetSongById(int id) => _songs.FirstOrDefault(s => s.Id == id);
 }
