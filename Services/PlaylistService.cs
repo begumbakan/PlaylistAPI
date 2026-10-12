@@ -187,4 +187,16 @@ public class PlaylistService
 
         return song;
     }
+
+    public PlaylistSummary GetSummary()
+    {
+        int total = _songs.Sum(s => s.DurationSeconds);
+
+        return new PlaylistSummary
+        {
+            SongCount = _songs.Count,
+            TotalDurationSeconds = total,
+            TotalDuration = $"{total / 60} min {total % 60} sec"
+        };
+    }
 }
