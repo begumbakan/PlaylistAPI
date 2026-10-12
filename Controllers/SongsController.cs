@@ -37,4 +37,14 @@ public class SongsController : ControllerBase
         var song = _service.AddSong(request);
         return CreatedAtAction(nameof(GetSongById), new { id = song.Id }, song);
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteSong(int id)
+    {
+        if (!_service.DeleteSong(id))
+        {
+            return NotFound();
+        }
+        return NoContent();
+    }
 }

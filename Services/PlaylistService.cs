@@ -92,4 +92,22 @@ public class PlaylistService
         _songs.Add(song);
         return song;
     }
+
+    public bool DeleteSong(int id)
+    {
+        var song = GetSongById(id);
+        if (song == null)
+        {
+            return false;
+        }
+
+        _songs.Remove(song);
+
+        for (int i = 0; i < _songs.Count; i++)
+        {
+            _songs[i].Position = i + 1;
+        }
+
+        return true;
+    }
 }
