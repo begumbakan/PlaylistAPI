@@ -30,4 +30,11 @@ public class SongsController : ControllerBase
         }
         return Ok(song);
     }
+
+    [HttpPost]
+    public ActionResult<Song> AddSong([FromBody] CreateSongRequest request)
+    {
+        var song = _service.AddSong(request);
+        return CreatedAtAction(nameof(GetSongById), new { id = song.Id }, song);
+    }
 }

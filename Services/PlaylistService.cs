@@ -74,4 +74,22 @@ public class PlaylistService
     public List<Song> GetAllSongs() => _songs;
 
     public Song? GetSongById(int id) => _songs.FirstOrDefault(s => s.Id == id);
+
+    public Song AddSong(CreateSongRequest request)
+    {
+        Song song = new Song
+        {
+            Id = _nextId++,
+            Title = request.Title,
+            Artist = request.Artist,
+            Album = request.Album,
+            DurationSeconds = request.DurationSeconds,
+            Genre = request.Genre,
+            IsFavorite = false,
+            Position = _songs.Count + 1
+        };
+
+        _songs.Add(song);
+        return song;
+    }
 }
