@@ -127,4 +127,16 @@ public class PlaylistService
 
         return song;
     }
+
+    public Song? SetFavorite(int id, bool isFavorite)
+    {
+        var song = GetSongById(id);
+        if (song == null)
+        {
+            return null;
+        }
+
+        song.IsFavorite = isFavorite;
+        return song;
+    }
 }

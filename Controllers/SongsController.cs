@@ -58,4 +58,26 @@ public class SongsController : ControllerBase
         }
         return Ok(song);
     }
+
+    [HttpPut("{id}/favorite")]
+    public ActionResult<Song> AddFavorite(int id)
+    {
+        var song = _service.SetFavorite(id, true);
+        if (song == null)
+        {
+            return NotFound();
+        }
+        return Ok(song);
+    }
+
+    [HttpDelete("{id}/favorite")]
+    public ActionResult<Song> RemoveFavorite(int id)
+    {
+        var song = _service.SetFavorite(id, false);
+        if (song == null)
+        {
+            return NotFound();
+        }
+        return Ok(song);
+    }
 }
