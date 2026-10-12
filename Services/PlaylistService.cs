@@ -71,7 +71,35 @@ public class PlaylistService
         _nextId = 6;
     }
 
-    public List<Song> GetAllSongs() => _songs;
+    public List<Song> GetSongs(string? search, string? genre, string? sortBy, string? order)
+    {
+        IEnumerable<Song> result = _songs;
+
+        if (!string.IsNullOrWhiteSpace(search))
+        {
+            result = result.Where(s =>
+                s.Title.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                s.Artist.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                s.Album.Contains(search, StringComparison.OrdinalIgnoreCase));
+        }
+
+        if (!string.IsNullOrWhiteSpace(genre))
+        {
+            result = result.Where(s => s.Genre.Equals(genre, StringComparison.OrdinalIgnoreCase));
+        }
+
+        bool desc = string.Equals(order, "desc", StringComparison.OrdinalIgnoreCase);
+
+        result = sortBy?.ToLower() switch
+        {
+            "title" => desc ? result.OrderByDescending(s => s.Title) : result.OrderBy(s => s.Title),
+            "artist" => desc ? result.OrderByDescending(s => s.Artist) : result.OrderBy(s => s.Artist),
+            "duration" => desc ? result.OrderByDescending(s => s.DurationSeconds) : result.OrderBy(s => s.DurationSeconds),
+            _ => result.OrderBy(s => s.Position)
+        };
+
+        return result.ToList();
+    }
 
     public Song? GetSongById(int id) => _songs.FirstOrDefault(s => s.Id == id);
 

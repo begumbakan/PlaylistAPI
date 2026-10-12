@@ -15,9 +15,13 @@ public class SongsController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<List<Song>> GetAllSongs()
+    public ActionResult<List<Song>> GetSongs(
+        [FromQuery] string? search,
+        [FromQuery] string? genre,
+        [FromQuery] string? sortBy,
+        [FromQuery] string? order)
     {
-        return Ok(_service.GetAllSongs());
+        return Ok(_service.GetSongs(search, genre, sortBy, order));
     }
 
     [HttpGet("{id}")]
