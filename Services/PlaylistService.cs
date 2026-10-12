@@ -110,4 +110,21 @@ public class PlaylistService
 
         return true;
     }
+
+    public Song? UpdateSong(int id, UpdateSongRequest request)
+    {
+        var song = GetSongById(id);
+        if (song == null)
+        {
+            return null;
+        }
+
+        song.Title = request.Title;
+        song.Artist = request.Artist;
+        song.Album = request.Album;
+        song.DurationSeconds = request.DurationSeconds;
+        song.Genre = request.Genre;
+
+        return song;
+    }
 }

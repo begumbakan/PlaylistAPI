@@ -47,4 +47,15 @@ public class SongsController : ControllerBase
         }
         return NoContent();
     }
+
+    [HttpPut("{id}")]
+    public ActionResult<Song> UpdateSong(int id, [FromBody] UpdateSongRequest request)
+    {
+        var song = _service.UpdateSong(id, request);
+        if (song == null)
+        {
+            return NotFound();
+        }
+        return Ok(song);
+    }
 }
