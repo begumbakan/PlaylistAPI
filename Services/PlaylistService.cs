@@ -167,4 +167,24 @@ public class PlaylistService
         song.IsFavorite = isFavorite;
         return song;
     }
+
+    public Song? MoveSong(int id, int newPosition)
+    {
+        var song = GetSongById(id);
+        if (song == null)
+        {
+            return null;
+        }
+
+        _songs.Remove(song);
+        int index = Math.Min(newPosition, _songs.Count + 1) - 1;
+        _songs.Insert(index, song);
+
+        for (int i = 0; i < _songs.Count; i++)
+        {
+            _songs[i].Position = i + 1;
+        }
+
+        return song;
+    }
 }

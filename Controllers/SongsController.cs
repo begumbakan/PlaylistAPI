@@ -84,4 +84,15 @@ public class SongsController : ControllerBase
         }
         return Ok(song);
     }
+
+    [HttpPut("{id}/position")]
+    public ActionResult<Song> MoveSong(int id, [FromBody] MoveSongRequest request)
+    {
+        var song = _service.MoveSong(id, request.Position);
+        if (song == null)
+        {
+            return NotFound();
+        }
+        return Ok(song);
+    }
 }
